@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.post('/upload', upload.single('photo'), async (req, res) => {
   const { caption } = req.body;
-  const url = `https://${process.env.SPACES_BUCKET}.${process.env.SPACES_REGION}.digitaloceanspaces.com/${req.file.filename}`;
+  const url = `https://photosnap-bucket.sgp1.digitaloceanspaces.com/${req.file.filename}`; 
 
   await pool.query('INSERT INTO photos (url, caption) VALUES ($1, $2)', [url, caption]);
   res.json({ success: true, url });
