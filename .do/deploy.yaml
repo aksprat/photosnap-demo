@@ -1,0 +1,30 @@
+name: photosnap
+services:
+  - name: backend
+    github:
+      repo: yourname/photosnap
+      branch: main
+      deploy_on_push: true
+    run_command: "node server.js"
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        value: "your-postgres-url"
+      - key: SPACES_BUCKET
+        scope: RUN_AND_BUILD_TIME
+        value: "your-space-name"
+      - key: SPACES_REGION
+        scope: RUN_AND_BUILD_TIME
+        value: "your-region"
+    http_port: 3000
+    dockerfile_path: backend/Dockerfile
+  - name: frontend
+    github:
+      repo: yourname/photosnap
+      branch: main
+      deploy_on_push: true
+    static_sites:
+      - build_command: ""
+        output_dir: frontend
+    routes:
+      - path: /
